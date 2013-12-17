@@ -2,6 +2,7 @@
 
 open ExcelDna.Integration
 open Microsoft.Office.Interop.Excel
+open System
 
 type Skills = {Id : int ; Name : string}
 
@@ -22,11 +23,19 @@ let xlExec action = ExcelAsyncUtil.QueueAsMacro action
 let loadXlLst name =
     let sheet = xl.Handle.Sheets.Item(RefDataSheet) :?> Worksheet
     let lst = sheet.ListObjects.Item(SkillsTable)
-    lst.ListRows
+    let enumerator = lst.ListRows.GetEnumerator()
+    seq { while enumerator.MoveNext()
+            do yield enumerator.Current :?> ListRow }
+    
+let getSkills =
+    let rows = loadXlLst SkillsTable
+    rows |> Seq.map ( fun x -> let rng = x.Range.Value2 :?> obj[,]
+                               let id = rng.[1, 1]
+                               let name = rng.[1,2]
+                               { Id = Convert.ToInt32(id); Name = Convert.ToString(name) } )
+    
+[<ExcelFunction>]
+let poop (x : int) = getSkills |> Seq.length
 
-//let getSkills =
-//    let rows = loadXlLst SkillsTable
-
-
-//[<ExcelFunction()>]
-//let poop x y = ExcelAsyncUtil.QueueAsMacro 
+[<ExcelFunction>]
+let poop1 x y = x + y

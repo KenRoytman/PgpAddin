@@ -24,9 +24,9 @@
     <DocumentationFile>bin\Debug\PgpAddin.XML</DocumentationFile>
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files\Microsoft Office\Office14\EXCEL.EXE</StartProgram>
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>julkas_pgp.xlsx</StartArguments>
     <PlatformTarget>x64</PlatformTarget>
+    <StartWorkingDirectory>C:\Users\kdawg\Documents\Visual Studio 2012\Projects\PgpAddin\Excel\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,11 +38,23 @@
     <DocumentationFile>bin\Release\PgpAddin.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Excel">
+      <HintPath>..\packages\ExcelDataReader.2.1.1\lib\net20\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ExcelDna.Integration">
       <HintPath>..\packages\Excel-DNA.0.30.3\lib\ExcelDna.Integration.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharpx.TypeProviders.Excel">
+      <HintPath>..\packages\FSharpx.TypeProviders.Excel.1.8.41\lib\40\FSharpx.TypeProviders.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\ExcelDataReader.2.1.1\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
@@ -53,11 +65,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library1.fs" />
-    <None Include="Script.fsx" />
     <Content Include="PgpAddin-AddIn.dna">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
